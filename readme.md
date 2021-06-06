@@ -6,8 +6,8 @@
 
 默认样式
 
-![](avatar/style-1.svg)
+![](public/images/style-1.svg)
 
 黑白风格
 
-![](avatar/style-2.svg)
+![](public/images/style-2.svg)
