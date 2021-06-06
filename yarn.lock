@@ -28,6 +28,11 @@
     "@babel/helper-validator-identifier" "^7.14.0"
     to-fast-properties "^2.0.0"
 
+"@types/file-saver@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.nlark.com/@types/file-saver/download/@types/file-saver-2.0.2.tgz#bd593ccfaee42ff94a5c1c83bf69ae9be83493b9"
+  integrity sha1-vVk8z67kL/lKXByDv2mum+g0k7k=
+
 "@types/raf@^3.4.0":
   version "3.4.0"
   resolved "https://registry.nlark.com/@types/raf/download/@types/raf-3.4.0.tgz#2b72cbd55405e071f1c4d29992638e022b20acc2"
@@ -244,6 +249,11 @@ estree-walker@^2.0.1:
   version "2.0.2"
   resolved "https://registry.npm.taobao.org/estree-walker/download/estree-walker-2.0.2.tgz#52f010178c2a4c117a7757cfe942adb7d2da4cac"
   integrity sha1-UvAQF4wqTBF6d1fP6UKtt9LaTKw=
+
+file-saver@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.npm.taobao.org/file-saver/download/file-saver-2.0.5.tgz#d61cfe2ce059f414d899e9dd6d4107ee25670c38"
+  integrity sha1-1hz+LOBZ9BTYmendbUEH7iVnDDg=
 
 fs.realpath@^1.0.0:
   version "1.0.0"
