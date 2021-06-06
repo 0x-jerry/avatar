@@ -3,7 +3,7 @@
     <canvas ref="cc" width="600" height="400"></canvas>
   </div>
   <div class="list">
-    <img v-for="o in names" :src="`/images/${o}.svg`" @click="changeName(o)" />
+    <img v-for="o in names" :src="`./images/${o}.svg`" @click="changeName(o)" />
   </div>
   <label class="pl-5">
     <span>width: </span>
