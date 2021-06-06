@@ -3,8 +3,8 @@
     <canvas ref="cc" width="600" height="400"></canvas>
   </div>
   <div class="list">
-    <img src="images/style-1.svg" @click="changeName('style-1')" />
-    <img src="images/style-2.svg" @click="changeName('style-2')" />
+    <img src="/images/style-1.svg" @click="changeName('style-1')" />
+    <img src="/images/style-2.svg" @click="changeName('style-2')" />
   </div>
   <label class="pl-5">
     <span>width: </span>
