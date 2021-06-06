@@ -3,8 +3,7 @@
     <canvas ref="cc" width="600" height="400"></canvas>
   </div>
   <div class="list">
-    <img src="/images/style-1.svg" @click="changeName('style-1')" />
-    <img src="/images/style-2.svg" @click="changeName('style-2')" />
+    <img v-for="o in names" :src="`/images/${o}.svg`" @click="changeName(o)" />
   </div>
   <label class="pl-5">
     <span>width: </span>
@@ -20,9 +19,11 @@ import { reactive, ref } from '@vue/reactivity'
 import { onMounted, watch } from '@vue/runtime-core'
 import { saveAs } from 'file-saver'
 
+const names = ['normal', 'black-white']
+
 const data = reactive({
   width: 470,
-  name: 'style-1'
+  name: names[0]
 })
 
 const hiddenDiv = ref<HTMLDivElement | null>(null)
