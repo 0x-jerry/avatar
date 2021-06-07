@@ -6,8 +6,8 @@
 
 默认样式
 
-[![](public/images/style-1.svg)](https://cwxyz007.github.io/avatar/?n=style-1)
+[![](public/images/normal.svg)](https://cwxyz007.github.io/avatar/?n=normal)
 
 黑白风格
 
-[![](public/images/style-2.svg)](https://cwxyz007.github.io/avatar/?n=style-2)
+[![](public/images/black-white.svg)](https://cwxyz007.github.io/avatar/?n=black-white)
