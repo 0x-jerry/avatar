@@ -14,10 +14,10 @@ const tools = reactive({
 const colors = reactive({
   d: '#e72c83',
   r: '#f52a48',
-  e: '#edc13e',
-  a: '#a7da49',
+  e: '#ffc929',
+  a: '#9fe123',
   m: '#0f93ff',
-  bg: '#d7e4ee',
+  bg: '#e9f3fb',
 })
 
 const keys: (keyof typeof colors)[] = Object.keys(colors) as any
@@ -59,9 +59,9 @@ async function download() {
         align="items-center"
       >
         <span class="D">D</span>
-        <span class="R">R</span>
-        <span class="E">E</span>
-        <span class="A">A</span>
+        <span class="R" transform="~ translate-x-1">R</span>
+        <span class="E" transform="~ translate-x-1">E</span>
+        <span class="A" transform="~ translate-x-2">A</span>
         <span class="M">M</span>
       </div>
     </div>
@@ -74,12 +74,18 @@ async function download() {
       z="100"
       pointer="none"
     >
-      <div w="9/10" h="9/10" border="~ solid gray-300" m="1/20"></div>
+      <div class="absolute top-0 left-0" w="9/10" h="9/10" border="~ solid gray-300" m="1/20"></div>
+      <div
+        class="absolute top-0 left-0"
+        w="full"
+        h="full"
+        border="~ solid gray-300 rounded-full"
+      ></div>
     </div>
   </div>
 
   <div flex="~" grid="gap-2" justify="center" align="items-center" m="b-4">
-    <button class="btn" @click="tools.showSubLine = !tools.showSubLine">Toggle sub line</button>
+    <button class="btn" @click="tools.showSubLine = !tools.showSubLine">Toggle subline</button>
     <button class="btn" @click="download">Download</button>
   </div>
 
@@ -120,8 +126,19 @@ async function download() {
 }
 
 .avatar-bg {
-  border: 1px solid rgb(221, 221, 221);
-  background: v-bind('colors.bg');
+  // border: 1px solid rgb(221, 221, 221);
+  @color1: hsl(156, 100%, 90%);
+  @color2: hsl(199, 100%, 90%);
+
+  @break-point: 16%;
+
+  background: linear-gradient(
+    calc(90deg + 30deg),
+    @color1,
+    @color1 @break-point,
+    @color2 @break-point,
+    @color2 100%
+  );
 }
 
 html,
