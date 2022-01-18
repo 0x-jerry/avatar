@@ -133,7 +133,7 @@ async function download() {
   @break-point: 16%;
 
   background: linear-gradient(
-    calc(90deg + 30deg),
+    120deg,
     @color1,
     @color1 @break-point,
     @color2 @break-point,
