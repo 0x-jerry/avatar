@@ -7,6 +7,10 @@ const data = reactive({
   size: 400,
 })
 
+const tools = reactive({
+  showSubLine: true,
+})
+
 const colors = reactive({
   d: '#e72c83',
   r: '#f52a48',
@@ -42,37 +46,45 @@ async function download() {
 </script>
 
 <template>
-  <div id="avatar" :style="avatarStyle" ref="rootEl">
-    <p class="text-dream">
-      <span class="D">D</span>
-      <span class="R">R</span>
-      <span class="E">E</span>
-      <span class="A">A</span>
-      <span class="M">M</span>
-    </p>
+  <div class="relative" w="min-content" m="x-auto y-6">
+    <div id="avatar" :style="avatarStyle" ref="rootEl">
+      <p class="text-dream">
+        <span class="D">D</span>
+        <span class="R">R</span>
+        <span class="E">E</span>
+        <span class="A">A</span>
+        <span class="M">M</span>
+      </p>
+    </div>
+
+    <div v-if="tools.showSubLine" class="sub-line absolute top-0 left-0" w="full" h="full" z="100">
+      <div w="9/10" h="9/10" border="~ solid gray-300" m="1/20"></div>
+    </div>
   </div>
+
+  <div flex="~" grid="gap-2" justify="center" align="items-center" m="b-4">
+    <button class="btn" @click="tools.showSubLine = !tools.showSubLine">Toggle sub line</button>
+    <button class="btn" @click="download">Download</button>
+  </div>
+
   <div flex="~" justify="center" align="items-center">
     <template v-for="o in keys">
       <input type="color" v-model="colors[o]" />
       <span m="x-2">{{ colors[o] }}</span>
     </template>
-
-    <button @click="download">Download</button>
   </div>
 </template>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap');
-/* @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap'); */
 </style>
 
 <style lang="less">
 .text-dream {
   font-family: 'Reenie Beanie', cursive;
-  // font-family: 'Shadows Into Light', cursive;
 
-  font-size: 180px;
-  letter-spacing: -0.1em;
+  font-size: 190px;
+  letter-spacing: -0.15em;
 
   .D {
     color: v-bind('colors.d');
@@ -92,10 +104,7 @@ async function download() {
 }
 
 #avatar {
-
   overflow: hidden;
-  margin: 50px auto;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -107,5 +116,10 @@ async function download() {
 html,
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.btn {
+  @apply bg-light-500 hover:bg-light-900;
+  @apply px-1;
 }
 </style>
