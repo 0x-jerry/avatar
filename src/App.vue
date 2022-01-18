@@ -47,17 +47,33 @@ async function download() {
 
 <template>
   <div class="relative" w="min-content" m="x-auto y-6">
-    <div id="avatar" :style="avatarStyle" ref="rootEl">
-      <p class="text-dream">
+    <div :style="avatarStyle" ref="rootEl" overflow="hidden">
+      <div class="avatar-bg" w="full" h="full"></div>
+      <div
+        class="text-dream absolute top-0 left-0"
+        w="full"
+        h="full"
+        z="10"
+        flex="~"
+        justify="center"
+        align="items-center"
+      >
         <span class="D">D</span>
         <span class="R">R</span>
         <span class="E">E</span>
         <span class="A">A</span>
         <span class="M">M</span>
-      </p>
+      </div>
     </div>
 
-    <div v-if="tools.showSubLine" class="sub-line absolute top-0 left-0" w="full" h="full" z="100">
+    <div
+      v-if="tools.showSubLine"
+      class="sub-line absolute top-0 left-0"
+      w="full"
+      h="full"
+      z="100"
+      pointer="none"
+    >
       <div w="9/10" h="9/10" border="~ solid gray-300" m="1/20"></div>
     </div>
   </div>
@@ -84,7 +100,7 @@ async function download() {
   font-family: 'Reenie Beanie', cursive;
 
   font-size: 190px;
-  letter-spacing: -0.15em;
+  letter-spacing: -0.13em;
 
   .D {
     color: v-bind('colors.d');
@@ -103,12 +119,7 @@ async function download() {
   }
 }
 
-#avatar {
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+.avatar-bg {
   border: 1px solid rgb(221, 221, 221);
   background: v-bind('colors.bg');
 }
