@@ -1,139 +1,111 @@
-<template>
-  <div class="canvas">
-    <canvas ref="cc" width="600" height="400"></canvas>
-  </div>
-  <div class="list">
-    <img v-for="o in names" :src="`./images/${o}.svg`" @click="changeName(o)" />
-  </div>
-  <label class="pl-5">
-    <span>width: </span>
-    <input type="number" v-model="data.width" />
-  </label>
-
-  <button @click="download" class="pl-5">download</button>
-  <div hidden ref="hiddenDiv"></div>
-</template>
-
 <script lang="ts" setup>
-import { reactive, ref } from '@vue/reactivity'
-import { onMounted, watch } from '@vue/runtime-core'
+import { reactive, ref, computed } from 'vue'
 import { saveAs } from 'file-saver'
-
-const names = ['normal', 'black-white']
+import html2canvas from 'html2canvas'
 
 const data = reactive({
-  width: 470,
-  name: names[0]
+  size: 400,
 })
 
-const hiddenDiv = ref<HTMLDivElement | null>(null)
-const cc = ref<HTMLCanvasElement | null>(null)
+const colors = reactive({
+  d: '#e72c83',
+  r: '#f52a48',
+  e: '#edc13e',
+  a: '#a7da49',
+  m: '#0f93ff',
+  bg: '#d7e4ee',
+})
 
-onMounted(async () => {
-  const url = new URL(location.href)
-  const size = url.searchParams.get('size')
-  const name = url.searchParams.get('name')
+const keys: (keyof typeof colors)[] = Object.keys(colors) as any
 
-  if (name) {
-    data.name = name
-  }
-
-  if (size) {
-    data.width = parseInt(size) || data.width
-  }
-
-  await generateImg()
-
-  if (url.searchParams.get('download')) {
-    download()
+const avatarStyle = computed(() => {
+  return {
+    width: `${data.size}px`,
+    height: `${data.size}px`,
   }
 })
 
-watch(
-  () => [data.width, data.name],
-  () => generateImg()
-)
+const rootEl = ref<HTMLDivElement>()
 
-function changeName(n: string) {
-  data.name = n
-}
+async function download() {
+  if (!rootEl.value) return
 
-async function generateImg() {
-  const canvas = cc.value
-  if (!canvas) {
-    return
-  }
+  const canvas = await html2canvas(rootEl.value)
 
-  const svgFile = `./images/${data.name}.svg`
+  // document.body.appendChild(canvas)
+  canvas.toBlob((blob) => {
+    if (!blob) return
 
-  const img = new Image()
-
-  return new Promise<void>(async (resolve, reject) => {
-    const res = await fetch(svgFile)
-    const svg = await res.text()
-    hiddenDiv.value!.innerHTML = svg
-    const svgEl = hiddenDiv.value!.querySelector('svg')
-    svgEl?.setAttribute('width', data.width.toString())
-    svgEl?.setAttribute('height', data.width.toString())
-
-    const svgData = new XMLSerializer().serializeToString(svgEl!)
-    const blob = new Blob([svgData], { type: 'image/svg+xml' })
-
-    img.onload = () => {
-      canvas.width = data.width
-      canvas.height = data.width
-      canvas.getContext('2d')!.drawImage(img, 0, 0)
-      resolve()
-    }
-
-    img.onerror = (e) => {
-      reject(new Error('Render failed!: ' + e))
-    }
-
-    img.src = window.URL.createObjectURL(blob)
-  })
-}
-
-function download() {
-  cc.value?.toBlob(function (blob) {
-    saveAs(blob!, 'avatar.png')
+    saveAs(blob, 'avatar.png')
   })
 }
 </script>
 
+<template>
+  <div id="avatar" :style="avatarStyle" ref="rootEl">
+    <p class="text-dream">
+      <span class="D">D</span>
+      <span class="R">R</span>
+      <span class="E">E</span>
+      <span class="A">A</span>
+      <span class="M">M</span>
+    </p>
+  </div>
+  <div flex="~" justify="center" align="items-center">
+    <template v-for="o in keys">
+      <input type="color" v-model="colors[o]" />
+      <span m="x-2">{{ colors[o] }}</span>
+    </template>
+
+    <button @click="download">Download</button>
+  </div>
+</template>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import url('https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap'); */
+</style>
+
+<style lang="less">
+.text-dream {
+  font-family: 'Reenie Beanie', cursive;
+  // font-family: 'Shadows Into Light', cursive;
+
+  font-size: 180px;
+  letter-spacing: -0.1em;
+
+  .D {
+    color: v-bind('colors.d');
+  }
+  .R {
+    color: v-bind('colors.r');
+  }
+  .E {
+    color: v-bind('colors.e');
+  }
+  .A {
+    color: v-bind('colors.a');
+  }
+  .M {
+    color: v-bind('colors.m');
+  }
 }
 
-.canvas {
-  height: 500px;
-  overflow: auto;
-  border-bottom: 1px solid gray;
+#avatar {
+
+  overflow: hidden;
+  margin: 50px auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid rgb(221, 221, 221);
+  background: v-bind('colors.bg');
 }
 
-canvas {
-  border: 1px solid gray;
-}
-
-.list {
-  height: 100px;
-  margin: 10px 0;
-}
-
-.list img {
-  width: 100px;
-  height: 100px;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.pl-5 {
-  margin-left: 5px;
+html,
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 </style>
