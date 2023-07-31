@@ -1,17 +1,9 @@
-import { defineConfig } from 'vite'
-import WindiCSS from 'vite-plugin-windicss'
-
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import unocss from "unocss/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './',
-  plugins: [
-    vue(),
-    WindiCSS({
-      config: {
-        attributify: true,
-      },
-    }),
-  ],
-})
+  base: "./",
+  plugins: [vue(), unocss()],
+});

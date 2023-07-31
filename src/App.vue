@@ -1,22 +1,15 @@
 <script lang="ts" setup>
-import {
-  reactive,
-  ref,
-  computed,
-  resolveComponent,
-  onMounted,
-  nextTick
-} from 'vue'
+import { reactive, ref, computed, onMounted, nextTick } from 'vue'
 import { saveAs } from 'file-saver'
 import html2canvas from 'html2canvas'
 
 const data = reactive({
   size: 400,
-  avatar: ''
+  avatar: '',
 })
 
 const tools = reactive({
-  showSubLine: true
+  showSubLine: true,
 })
 
 const colors = reactive({
@@ -24,7 +17,7 @@ const colors = reactive({
   r: '#f52a48',
   e: '#ffc929',
   a: '#9fe123',
-  m: '#0f93ff'
+  m: '#0f93ff',
 })
 
 const keys: (keyof typeof colors)[] = Object.keys(colors) as any
@@ -32,7 +25,7 @@ const keys: (keyof typeof colors)[] = Object.keys(colors) as any
 const avatarStyle = computed(() => {
   return {
     width: `${data.size}px`,
-    height: `${data.size}px`
+    height: `${data.size}px`,
   }
 })
 
@@ -71,39 +64,18 @@ async function getAvatarImage(el: HTMLElement) {
 </script>
 
 <template>
-  <div flex="~" justify="center" align="items-center" m="y-6" grid="gap-x-6">
+  <div class="flex justify-center items-center my-6 gap-x-6">
     <div class="relative">
       <div ref="rootEl">
-        <div class="relative" :style="avatarStyle" overflow="hidden">
-          <div class="avatar-bg" w="full" h="full"></div>
+        <div class="relative overflow-hidden" :style="avatarStyle">
+          <div class="avatar-bg w-full h-full"></div>
           <div
-            class="text-dream absolute top-0 left-0"
-            flex="~"
-            w="full"
-            h="full"
-            justify="center"
-            align="items-center"
-            z="10"
+            class="text-dream absolute top-0 left-0 flex w-full h-full justify-center items-center z-10"
           >
             <span class="D" :style="{ color: colors.d }">D</span>
-            <span
-              class="R"
-              :style="{ color: colors.r }"
-              transform="~ translate-x-1"
-              >R</span
-            >
-            <span
-              class="E"
-              :style="{ color: colors.e }"
-              transform="~ translate-x-1"
-              >E</span
-            >
-            <span
-              class="A"
-              :style="{ color: colors.a }"
-              transform="~ translate-x-2"
-              >A</span
-            >
+            <span class="R" :style="{ color: colors.r }" un-transform="~ translate-x-1">R</span>
+            <span class="E" :style="{ color: colors.e }" un-transform="~ translate-x-1">E</span>
+            <span class="A" :style="{ color: colors.a }" un-transform="~ translate-x-2">A</span>
             <span class="M" :style="{ color: colors.m }">M</span>
           </div>
         </div>
@@ -111,47 +83,32 @@ async function getAvatarImage(el: HTMLElement) {
 
       <div
         v-if="tools.showSubLine"
-        class="sub-line absolute top-0 left-0"
-        w="full"
-        h="full"
-        z="100"
-        pointer="none"
+        class="sub-line absolute top-0 left-0 w-full h-full z-100 pointer-events-none"
       >
+        <div class="absolute top-0 left-0 w-9/10 w-9/10 border-(~ solid gray-300) m-1/20"></div>
         <div
-          class="absolute top-0 left-0"
-          w="9/10"
-          h="9/10"
-          border="~ solid gray-300"
-          m="1/20"
-        ></div>
-        <div
-          class="absolute top-0 left-0"
-          w="full"
-          h="full"
-          border="~ solid gray-300 rounded-full"
+          class="absolute top-0 left-0 w-full h-full"
+          un-border="~ solid gray-300 rounded-full"
         ></div>
       </div>
     </div>
 
-    <img w="200px" h="200px" :src="data.avatar" border="rounded-lg" />
-    <img w="100px" h="100px" :src="data.avatar" border="rounded-3xl" />
-
-    <img w="50px" h="50px" :src="data.avatar" border="rounded-full" />
+    <img :src="data.avatar" class="w-200px h-200px rounded-lg" />
+    <img :src="data.avatar" class="w-100px h-100px rounded-3xl" />
+    <img :src="data.avatar" class="w-50px h-50px rounded-full" />
   </div>
 
-  <div flex="~" grid="gap-2" justify="center" align="items-center" m="b-4">
-    <button class="btn" @click="tools.showSubLine = !tools.showSubLine">
-      Toggle subline
-    </button>
+  <div class="flex gap-2 justify-center items-center mb-4">
+    <button class="btn" @click="tools.showSubLine = !tools.showSubLine">Toggle subline</button>
     <button class="btn" @click="download">Download</button>
 
     <button class="btn" @click="updateCanvas">Update</button>
   </div>
 
-  <div flex="~" justify="center" align="items-center">
+  <div class="flex justify-center items-center">
     <template v-for="o in keys">
       <input type="color" v-model="colors[o]" />
-      <span m="x-2">{{ colors[o] }}</span>
+      <span class="mx-2">{{ colors[o] }}</span>
     </template>
   </div>
 </template>
@@ -190,6 +147,9 @@ body {
 }
 
 .btn {
+  border: none;
+  padding: 4px 16px;
+
   @apply bg-light-500 hover:bg-light-900;
   @apply px-1;
 }
